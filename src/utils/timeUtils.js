@@ -4,15 +4,13 @@ export function useTimeInput(){
     return {hour, minute}
 }
 
-export function convertInput(){
-    let {hour, minute} = useTimeInput();
-    if(minute > 60){
-        hour += Math.floor(minute/60)
-        minute = minute % 60
+export function convertInput(hour, minute){
+    let hr = Number(hour)
+    let min = Number(minute)
+    if(min > 60){
+        hr += Math.floor(min/60)
+        min = min % 60
     }
-    
-    console.log(hour,minute)
-
-    const second = hour*3600 + minute*60
+    const second = hr*3600 + min*60
     return second
 }
