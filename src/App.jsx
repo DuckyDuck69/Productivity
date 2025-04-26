@@ -9,6 +9,7 @@ function App() {
       <div className="page-container" style = {{display : "inline-flex"}}>
 
         <Title/>
+        <Video/>
         <TimeDuration/>
         <FileInput />
         <TodoList />

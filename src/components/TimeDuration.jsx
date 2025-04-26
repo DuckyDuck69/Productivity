@@ -55,8 +55,7 @@ function TimeDuration() {
           onChange={(e) => setMinute(e.target.value)}
         />
       </div>
-      <button onClick={()=>console.log(handleTimeInput())}>rereive time</button>
-      <button onClick={startTimer}>Timer</button>
+      <button onClick={startTimer}>Start timer</button>
       <button onClick={() => clearInterval(intervalID.current)}>Stop timer</button>
       <button onClick={runTime}>Resume</button>
       <button onClick={() => setSecond(0)}>Reset timer</button>
