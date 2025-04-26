@@ -1,14 +1,18 @@
 import TimeDuration from "./components/TimeDuration"
 import Title from "./components/Title"
-import Video from "./components/Video"
+import FileInput from "./components/FileInput"
+import TodoList from "./components/ToDoList"
 
 function App() {
   return (
     <>
-      <div className="page-container">
+      <div className="page-container" style = {{display : "inline-flex"}}>
+
         <Title/>
         <Video/>
         <TimeDuration/>
+        <FileInput />
+        <TodoList />
       </div>
     </>
   )
