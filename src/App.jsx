@@ -1,11 +1,13 @@
-
+import TimeDuration from "./components/TimeDuration"
+import Title from "./components/Title"
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      
+      <div className="page-container">
+        <Title/>
+        <TimeDuration/>
+      </div>
     </>
   )
 }
