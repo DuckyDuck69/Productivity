@@ -7,7 +7,7 @@ function StudyMethod({method, setMethod }) {
     console.log("Choose study: ", selectedOne);
   }
   return (
-    <div className="bg-white shadow-lg place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[50px] rounded-xl">
+    <div className="bg-primary border-2 border-[var(--primary)] shadow-md rounded-xl p-6">
       <h4>Extra Study Methods: </h4>
       <select value={method} onChange={handleChanges}>
         <option value="regular">No Option</option>

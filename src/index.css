@@ -1,4 +1,20 @@
 @import "tailwindcss";
+
+:root {
+  --primary: #34D399;
+  --accent: #22D3EE;
+  --support: #FCD34D;
+  --background: #86A788; /* Update to Champagne Pink */
+  --font-color: #1F2937;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--font-color);
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
 /*
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
