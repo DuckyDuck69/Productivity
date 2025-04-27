@@ -4,16 +4,16 @@ function Video() {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
-  function stopCam(){
-    if(streamRef.current){
-        streamRef.current.getTracks().forEach(track => {
-            track.stop();
-        }); 
-        streamRef.current = null   //clean the ref
+  function stopCam() {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => {
+        track.stop();
+      });
+      streamRef.current = null; //clean the ref
     }
   }
 
-  function startCam(){
+  function startCam() {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
@@ -28,19 +28,31 @@ function Video() {
       });
   }
   return (
-    <>
-        <video
+    <div className="flex flex-col items-center">
+      <video
         ref={videoRef}
-        width="640"
-        height="480"
+        width="320"
+        height="240"
         autoPlay
         muted
         style={{ transform: "scaleX(-1)" }}
-        ></video>
-        <button onClick={startCam}>Start Camera</button>
-        <button onClick={stopCam}>Stop Camera</button>
-    </>
-    
+        className="rounded-lg shadow-md"
+      ></video>
+      <div className="flex gap-4 mt-4">
+        <button 
+          onClick={startCam}
+          className="bg-[var(--primary)] hover:bg-[var(--accent)] text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+          >
+          Start Camera
+        </button>
+        <button 
+          onClick={stopCam}
+          className="bg-red-400 hover:bg-red-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+          >
+          Stop Camera
+        </button>
+      </div>
+    </div>
   );
-}
+}  
 export default Video;

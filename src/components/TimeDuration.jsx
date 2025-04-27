@@ -299,14 +299,14 @@ function TimeDuration({ method = "regular" }) {
       {/* Control Buttons */}
       <div className="grid grid-cols-2 gap-2 mb-4">
         <button
-          className={`text-white px-3 py-2 rounded-lg ${!isRunning ? "bg-purple-500 hover:bg-purple-600" : "bg-purple-200 cursor-not-allowed text-purple"}`}
+          className={`text-white px-3 py-2 rounded-lg ${!isRunning ? "bg-[var(--primary)] hover:bg-[var(--accent)]" : "bg-gray-300 cursor-not-allowed"}`}
           onClick={startTimer}
           disabled={isRunning}
         >
           Start Timer
         </button>
         <button
-          className={`text-white px-3 py-2 rounded-lg ${isRunning ? "bg-purple-500 hover:bg-purple-600" : "bg-purple-200 cursor-not-allowed"}`}
+          className={`text-white px-3 py-2 rounded-lg ${!isRunning ? "bg-[var(--primary)] hover:bg-[var(--accent)]" : "bg-gray-300 cursor-not-allowed"}`}
           onClick={() => {
             if (isRunning) {
               clearInterval(intervalID.current);
@@ -319,7 +319,7 @@ function TimeDuration({ method = "regular" }) {
           Pause Timer
         </button>
         <button
-          className={`text-white px-3 py-2 rounded-lg ${!isRunning && second > 0 ? "bg-purple-400 hover:bg-purple-400" : "bg-purple-200 cursor-not-allowed text-purple"}`}
+          className={`text-white px-3 py-2 rounded-lg ${!isRunning ? "bg-[var(--primary)] hover:bg-[var(--accent)]" : "bg-gray-300 cursor-not-allowed"}`}
           onClick={() => {
             if (!isRunning && second > 0) {
               setIsRunning(true);

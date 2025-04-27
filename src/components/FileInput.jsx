@@ -126,7 +126,7 @@ export function FileInput() {
   };
 
   return (
-    <div className="flex flex-col" style={{ margin: "20px", maxWidth: "1000px" }}>
+    <div className="flex flex-col w-full h-full p-4">
       <input
         type="file"
         ref={inputRef}
@@ -137,14 +137,14 @@ export function FileInput() {
       
       {uploadedFiles.length === 0 ? (
         <button 
-          className="w-full h-[600px] text-lg font-medium flex flex-col items-center justify-center gap-3 text-[#8A3FFC] bg-white rounded-2xl cursor-pointer transition-all duration-300 ease-in-out hover:text-[#8a3ffc] hover:bg-white border-2 border-dashed" 
+          className="w-full flex-1 min-h-[400px] text-lg font-medium flex flex-col items-center justify-center gap-3 text-[#8A3FFC] bg-white rounded-2xl cursor-pointer transition-all duration-300 ease-in-out hover:text-[#8a3ffc] hover:bg-white border-2 border-dashed" 
           onClick={onChooseFile}
         >
           <span className="w-12 h-12 text-xl text-[#8a3ffc] flex items-center justify-center rounded-full bg-[#f3ecff]">upload</span> Upload file 
         </button>
       ) : (
         <>
-          <div className="w-full h-[600px] bg-white rounded-2xl border-2 overflow-hidden">
+          <div className="w-full flex-1 min-h-[400px] bg-white rounded-2xl border-2 overflow-hidden">
             {renderFileContent(uploadedFiles[uploadedFiles.length - 1])}
           </div>
           <div className="flex justify-between items-center mt-2 px-2">
