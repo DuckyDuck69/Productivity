@@ -15,8 +15,8 @@ function App() {
         <div className="col-start-3"><Video/></div>
         <div className="col-start-1"><TodoList /></div>
         <div className="col-start-2 col-span-3"><FileInput /></div>
-        <div className="col-start-1"><TimeDuration/></div>
-        <div className="col-start-1 col-span-2"><StudyMethod/></div>
+        <div className="col-start-1"><TimeDuration method="regular"/> </div>
+        <div className="col-start-2 col-span-3"><StudyMethod/></div>
       </div>
   )
 }

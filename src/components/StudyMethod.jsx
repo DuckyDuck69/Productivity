@@ -1,19 +1,20 @@
 import { useState, useRef } from "react";
 
 function StudyMethod({method, setMethod }) {
-    function handleChanges(event) {
+  function handleChanges(event) {
     const selectedOne = event.target.value;
     setMethod(selectedOne);
     console.log("Choose study: ", selectedOne);
   }
   return (
-    <div>
+    <div className="bg-white shadow-lg place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[50px] rounded-xl">
       <h4>Extra Study Methods: </h4>
       <select value={method} onChange={handleChanges}>
         <option value="regular">No Option</option>
         <option value="pomodoro">Pomodoro</option>
         <option value="flowtime">Flowtime Technique</option>
         <option value="ultradian">Ultradian Sprints</option>
+        <option value = "eyecare">Eye Care</option>
       </select>
     </div>
   );
