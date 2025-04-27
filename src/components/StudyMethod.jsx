@@ -14,8 +14,8 @@ function StudyMethod({method, setMethod }) {
         <option value="pomodoro">Pomodoro</option>
         <option value="flowtime">Flowtime Technique</option>
         <option value="ultradian">Ultradian Sprints</option>
+        <option value = "eyecare">Eye Care</option>
       </select>
-      <button onClick={setMethod(method)}>Confirm method</button>
     </div>
   );
 }

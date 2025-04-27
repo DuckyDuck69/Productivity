@@ -5,31 +5,34 @@ import { useState, useRef, useEffect } from "react";
 // State value (current state)
 // Setter function (to update this state)
 
-function TimeDuration({hour, setHour, minute, setMinute, method}) {
+function TimeDuration({ hour, setHour, minute, setMinute, method }) {
   const [second, setSecond] = useState(0);
   const [targetSeconds, setTargetSeconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false)
-  const [mode, setMode] = useState("work")
+  const [isRunning, setIsRunning] = useState(false);
+  const [mode, setMode] = useState("work");
 
   const intervalID = useRef(null); // This holds the interval ID across renders
 
-  const handleTimeInput = () =>{
-    const second = convertInput(hour,minute);
-    return second
-  }
+  const handleTimeInput = () => {
+    const second = convertInput(hour, minute);
+    return second;
+  };
 
   const notifyUser = async () => {
-    //notify between work and break
-    const message = mode !== "work" 
-      ? "Take a break!" 
-      : "Time to work!";
+    if (Notification.permission !== "granted") {
+      await Notification.requestPermission();
+    }
+  
     if (Notification.permission === "granted") {
-      new Notification(message);
-    } else if (Notification.permission !== "denied") {
-      const permission = await Notification.requestPermission();
-      if (permission === "granted") {
-        new Notification(message);
+      let message;
+      if (method == "pomodoro") {
+        message = mode === "work" ? "Take a 5 minutes break!" : "Back to work!";
+      } else if (method == "eyecare") {
+        message = mode === "work" ? "Rest your eyes" : "Back to work!";
+      } else {
+        message = mode !== "work" ? "Take a break!" : "Time to work!";
       }
+      new Notification(message);
     }
   };
 
@@ -44,22 +47,27 @@ function TimeDuration({hour, setHour, minute, setMinute, method}) {
         new Notification(message);
       }
     }
-  };  
+  };
 
   useEffect(() => {
-    if(!isRunning) return;   //avooid shooting this when time is 0 and no method initialized
+    if (!isRunning) return;
     if (second === 0 && intervalID.current) {
-      clearInterval(intervalID.current);
-      notifyUser();
-      if (method !== "regular") {
-        if (mode === "work") {
-          // Subtract 25 min from target
-          setTargetSeconds(prev => prev - 25 * 60);
-          startBreak();
-        } else {
-          startWork();
+      (async () => {
+        await notifyUser(); // wait for the notification process to finish
+        clearInterval(intervalID.current);
+        if (method !== "regular") {
+          if (mode === "work") {
+            if (method === "pomodoro") {
+              setTargetSeconds((prev) => prev - 25*60);
+            } else if (method === "eyecare") {
+              setTargetSeconds((prev) => prev - 20 * 60);
+            }
+            startBreak();
+          } else {
+            startWork();
+          }
         }
-      }
+      })(); // immediately invoked function
     }
   }, [second, mode, method, isRunning]);
 
@@ -73,29 +81,27 @@ function TimeDuration({hour, setHour, minute, setMinute, method}) {
     }
   }, [targetSeconds, isRunning]);
 
-  function runTime(){
-    intervalID.current = setInterval(()=>{
-      setSecond(prev => {
-        if(prev == 0){
-          clearInterval(intervalID.current); 
+  function runTime() {
+    intervalID.current = setInterval(() => {
+      setSecond((prev) => {
+        if (prev == 0) {
+          clearInterval(intervalID.current);
           return 0;
         }
-        return prev - 1
-      })
-    }, 1000
-    )
+        return prev - 1;
+      });
+    }, 1000);
   }
 
-  function startTimer(){
+  function startTimer() {
     //shoot the useEffect
     setIsRunning(true);
-  
-    if(mode != "regular"){
+
+    if (mode != "regular") {
       const totalStudyTime = handleTimeInput(); // the goal the user entered
       setTargetSeconds(totalStudyTime);
       startWork();
-    }
-    else{
+    } else {
       const totalSec = handleTimeInput();
       setSecond(totalSec); //set the second only when the user prompt inputs
       runTime();
@@ -103,35 +109,43 @@ function TimeDuration({hour, setHour, minute, setMinute, method}) {
   }
 
   function startWork() {
-    if(method == "pomodoro"){
-      setMode("work");
+    setMode("work");
+    if (method == "pomodoro") {
       setHour(0);
       setMinute(25);
-      setSecond(25 * 60); // 25 minutes
+      setSecond(25 *60 ); // 25 minutes
       runTime();
-    }
-    else if (method == "flowtime"){
-      runTime()
-    }else if (method == "ultradian"){
-      runTime()
+    } else if (method == "eyecare"){
+      setHour(0);
+      setMinute(20);
+      setSecond(20 * 60); // 20 minutes
+      runTime();
+    } 
+    else if (method == "flowtime") {
+      runTime();
+    } else if (method == "ultradian") {
+      runTime();
     }
   }
 
   function startBreak() {
-    if(method == "pomodoro"){
-      setMode("break");
+    setMode("break");
+    if (method == "pomodoro") {
       setHour(0);
       setMinute(5);
-      setSecond(5 * 60); // 5 minutes
+      setSecond(5 *60); // 5 minutes
       runTime();
-    }
-    else if (method == "flowtime"){
-      runTime()
-    }else if (method == "ultradian"){
+    } else if (method == "flowtime") {
+      runTime();
+    } else if (method == "ultradian") {
+      runTime();
+    } else if (method == "eyecare"){
+      setHour(0);
+      setMinute(0);
+      setSecond(20); //the eyes need to rest for 20 seconds
       runTime()
     }
   }
-
 
   return (
     <div className="time-duration-box">
@@ -155,14 +169,31 @@ function TimeDuration({hour, setHour, minute, setMinute, method}) {
         />
       </div>
       <button onClick={startTimer}>Start timer</button>
-      <button onClick={() => { clearInterval(intervalID.current); setIsRunning(false); }}>Stop timer</button>
+      <button
+        onClick={() => {
+          clearInterval(intervalID.current);
+          setIsRunning(false);
+        }}
+      >
+        Stop timer
+      </button>
       <button onClick={runTime}>Resume</button>
-      <button onClick={() => { clearInterval(intervalID.current); setSecond(0); setIsRunning(false); }}>Reset timer</button>
+      <button
+        onClick={() => {
+          clearInterval(intervalID.current);
+          setSecond(0);
+          setIsRunning(false);
+        }}
+      >
+        Reset timer
+      </button>
       <h3>Hour: {Math.floor(second / 3600)}</h3>
       <h3>Minute: {Math.floor((second % 3600) / 60)}</h3>
       <h3>Second: {second % 60}</h3>
       {method === "pomodoro" && (
-        <h4>Remaining Study Time: {Math.floor(targetSeconds / 60) - 25 } minutes</h4>
+        <h4>
+          Remaining Study Time: {Math.floor(targetSeconds / 60) - 25} minutes
+        </h4>
       )}
     </div>
   );
