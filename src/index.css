@@ -1,65 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #34D399;
-  --accent: #22D3EE;
-  --support: #FCD34D;
-  --background: #86A788; /* Update to Champagne Pink */
-  --font-color: #1F2937;
+  --primary: #8b5cf6;
+  --accent: #f472b6;
+  --support: #34d399;
+  --background: #C6E7FF;
+  --font-color: #374151;
 }
 
 body {
   background-color: var(--background);
   color: var(--font-color);
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nunito', system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0;
   min-height: 100vh;
-}
-/*
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color: rgba(14, 2, 2, 0.87);
-  background-color: #e6f0f8;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

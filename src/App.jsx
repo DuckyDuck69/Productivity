@@ -29,17 +29,17 @@ function App() {
       <div className="grid grid-cols-12 gap-6 w-full px-12">
 
         {/* Left Column: Tasks */}
-        <div className="col-span-3 flex flex-col bg-[#FFFDEC] p-4 shadow-lg rounded-xl h-full hover:shadow-2xl transition-shadow duration-300">
+        <div className="col-span-3 flex flex-col bg-[#FBFBFB] p-4 shadow-lg rounded-xl h-full hover:shadow-2xl transition-shadow duration-300">
           <TodoList />
         </div>
 
         {/* Center Column: File Upload */}
-        <div className="col-span-6 flex flex-col bg-[#FFFDEC] p-4 shadow-lg rounded-xl h-full hover:shadow-2xl transition-shadow duration-300">
+        <div className="col-span-6 flex flex-col bg-[#FBFBFB] p-4 shadow-lg rounded-xl h-full hover:shadow-2xl transition-shadow duration-300">
           <FileInput />
         </div>
 
         {/* Right Column: Video on top, Timer below */}
-        <div className="col-span-3 flex flex-col bg-[#FFFDEC] p-4 shadow-lg rounded-xl min-h-[650px] justify-between hover:shadow-2xl transition-shadow duration-300">
+        <div className="col-span-3 flex flex-col bg-[#FBFBFB] p-4 shadow-lg rounded-xl min-h-[650px] justify-between hover:shadow-2xl transition-shadow duration-300">
           <div className="flex flex-col items-center mb-6">
             <Video />
           </div>
