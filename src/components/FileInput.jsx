@@ -79,55 +79,43 @@ export function FileInput() {
 
     if (file.type.includes("text") || file.type.includes("application/json") || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
       return (
-        <div className="file-preview text-content">
-          <h3>Text Content:</h3>
-          <pre
-            style={{
-              maxHeight: "300px",
-              overflow: "auto",
-              whiteSpace: "pre-wrap",
-              border: "1px solid #ccc",
-              padding: "10px",
-            }}
-          >
-            {content}
-          </pre>
+        <div className="file-preview text-content h-full w-full p-4">
+          <div className="h-full w-full overflow-auto bg-gray-50 rounded p-4">
+            <pre className="whitespace-pre-wrap break-words font-mono text-sm">
+              {content}
+            </pre>
+          </div>
         </div>
       );
     } else if (file.type.includes("image")) {
       return (
-        <div className="file-preview image-content">
-          <h3>Image Preview:</h3>
-          <img src={content} alt="Preview" style={{ maxWidth: "100%", maxHeight: "300px" }} />
+        <div className="file-preview image-content h-full w-full flex items-center justify-center">
+          <img src={content} alt="Preview" className="max-w-full max-h-full object-contain" />
         </div>
       );
     } else if (file.type === "application/pdf") {
       return (
-        <div className="file-preview pdf-content">
-          <h3>PDF Preview:</h3>
+        <div className="file-preview pdf-content h-full w-full">
           <iframe
             src={content}
             title="PDF Preview"
-            width="100%"
-            height="500px"
+            className="w-full h-full"
             style={{ border: "1px solid #ccc" }}
           />
         </div>
       );
     } else if (file.type.includes("video")) {
       return (
-        <div className="file-preview video-content">
-          <h3>Video Preview:</h3>
-          <video src={content} controls style={{ maxWidth: "100%", maxHeight: "400px" }}>
+        <div className="file-preview video-content h-full w-full flex items-center justify-center">
+          <video src={content} controls className="max-w-full max-h-full">
             Your browser does not support the video tag.
           </video>
         </div>
       );
     } else if (file.type.includes("audio")) {
       return (
-        <div className="file-preview audio-content">
-          <h3>Audio Preview:</h3>
-          <audio src={content} controls style={{ width: "100%" }}>
+        <div className="file-preview audio-content h-full w-full flex items-center justify-center">
+          <audio src={content} controls className="w-full">
             Your browser does not support the audio tag.
           </audio>
         </div>
@@ -138,7 +126,7 @@ export function FileInput() {
   };
 
   return (
-    <div style={{ margin: "20px", maxWidth: "800px" }}>
+    <div className="flex flex-col" style={{ margin: "20px", maxWidth: "1000px" }}>
       <input
         type="file"
         ref={inputRef}
@@ -146,27 +134,43 @@ export function FileInput() {
         style={{ display: "none" }}
         accept="text/*,image/*,application/pdf,video/*,audio/*,application/json,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       />
-      <button className="file-btn" onClick={onChooseFile}>
-        <span className="material-symbols-rounded">upload</span> Upload file
-      </button>
-
-      {uploadedFiles.length > 0 && (
-        <div className="uploaded-files">
-          {uploadedFiles.map((item, index) => (
-            <div key={index} className="selected-file" style={{ marginBottom: "20px" }}>
-              <p>
-                {item.file.name} ({Math.round(item.file.size / 1024)} KB) - {item.file.type}
-              </p>
-              <button className="material-symbols-rounded" onClick={() => removeFile(item.file)}>
+      
+      {uploadedFiles.length === 0 ? (
+        <button 
+          className="w-full h-[600px] text-lg font-medium flex flex-col items-center justify-center gap-3 text-[#8A3FFC] bg-white rounded-2xl cursor-pointer transition-all duration-300 ease-in-out hover:text-[#8a3ffc] hover:bg-white border-2 border-dashed" 
+          onClick={onChooseFile}
+        >
+          <span className="w-12 h-12 text-xl text-[#8a3ffc] flex items-center justify-center rounded-full bg-[#f3ecff]">upload</span> Upload file 
+        </button>
+      ) : (
+        <>
+          <div className="w-full h-[600px] bg-white rounded-2xl border-2 overflow-hidden">
+            {renderFileContent(uploadedFiles[uploadedFiles.length - 1])}
+          </div>
+          <div className="flex justify-between items-center mt-2 px-2">
+            <p className="text-sm truncate max-w-lg">
+              {uploadedFiles[uploadedFiles.length - 1].file.name} ({Math.round(uploadedFiles[uploadedFiles.length - 1].file.size / 1024)} KB)
+            </p>
+            <div className="flex gap-2">
+              <button 
+                className="px-3 py-1 text-sm bg-[#f3ecff] text-[#8A3FFC] rounded-lg hover:bg-[#e6d8ff]"
+                onClick={onChooseFile}
+              >
+                Change file
+              </button>
+              <button 
+                className="material-symbols-rounded p-1 bg-red-100 text-red-500 rounded-lg hover:bg-red-200"
+                onClick={() => removeFile(uploadedFiles[uploadedFiles.length - 1].file)}
+              >
                 delete
               </button>
-              {renderFileContent(item)}
             </div>
-          ))}
-        </div>
+          </div>
+        </>
       )}
     </div>
   );
 }
 
-export default FileInput
+export default FileInput;
+

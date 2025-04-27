@@ -37,10 +37,12 @@ function TimeDuration() {
   }
 
   return (
-    <div className="time-duration-box">
-      <h3>Time Duration</h3>
-      <div className="time-boxes">
+    <div className="bg-white shadow-lg place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[200px] rounded-xl">
+      <h3>Study session:</h3>
+      <div>
+      <div className="grid grid-cols-2 gap-x-2">
         <input
+          className="border-solid border-1 border-gray-200 "
           type="number"
           id="hour-input"
           placeholder="Hour"
@@ -48,20 +50,25 @@ function TimeDuration() {
           onChange={(e) => setHour(e.target.value)}
         />
         <input
+          className="border-solid border-1 border-gray-200 "
           type="number"
           id="minute-input"
           placeholder="Minute"
           value={minute}
           onChange={(e) => setMinute(e.target.value)}
         />
+        </div>
+      <div/>
+      <div className="grid grid-cols-2 gap-2">
+      <button className="text-white px-3 py-1 text-sm bg-purple-300 rounded-lg hover:bg-[#e6d8ff] gap-4" onClick={startTimer}>Start timer</button>
+      <button className="text-white px-3 py-1 text-sm bg-purple-300 rounded-lg hover:bg-[#e6d8ff] gap-4" onClick={() => clearInterval(intervalID.current)}>Stop timer</button>
+      <button className="text-white px-3 py-1 text-sm bg-purple-300 rounded-lg hover:bg-[#e6d8ff] gap-4" onClick={runTime}>Resume</button>
+      <button className="text-white px-3 py-1 text-sm bg-purple-300 rounded-lg hover:bg-[#e6d8ff] gap-4" onClick={() => setSecond(0)}>Reset timer</button>
       </div>
-      <button onClick={startTimer}>Start timer</button>
-      <button onClick={() => clearInterval(intervalID.current)}>Stop timer</button>
-      <button onClick={runTime}>Resume</button>
-      <button onClick={() => setSecond(0)}>Reset timer</button>
       <h3>Hour: {Math.floor(second / 3600)}</h3>
       <h3>Minute: {Math.floor((second % 3600) / 60)}</h3>
       <h3>Second: {second % 60}</h3>
+    </div>
     </div>
   );
 }
