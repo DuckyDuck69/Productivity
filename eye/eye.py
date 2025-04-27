@@ -31,7 +31,7 @@ class Eye(object):
             p2 (dlib.point): Second point
         """
         x = int((p1.x + p2.x) / 2)
-        y = int((p2.y + p2.y) / 2)
+        y = int((p1.y + p2.y) / 2)
         return (x, y)
 
     def _isolate(self, frame, landmarks, points):

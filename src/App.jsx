@@ -1,10 +1,10 @@
+import { useState, useEffect } from "react";
 import TimeDuration from "./components/TimeDuration";
 import Title from "./components/Title";
 import FileInput from "./components/FileInput";
 import TodoList from "./components/ToDoList";
 import Video from "./components/Video";
 import StudyMethod from "./components/StudyMethod";
-import { useState, useEffect } from "react";
 
 function App() {
   const [hour, setHour] = useState("");
@@ -18,25 +18,51 @@ function App() {
   }, []);
 
   return (
-    <>
-      <div className="page-container" style={{ display: "inline-flex" }}>
+    <div className="flex flex-col min-h-screen bg-background text-fontcolor">
+
+      {/* Title centered at the top */}
+      <div className="flex justify-center mb-8">
         <Title />
-        <Video />
-        <TimeDuration
-          hour={hour}
-          setHour={setHour}
-          minute={minute}
-          setMinute={setMinute}
-          method={method}
-        />
-        <StudyMethod
-          method = {method}
-          setMethod = {setMethod}
-        />
-        <FileInput />
-        <TodoList />
       </div>
-    </>
+
+      {/* One Row with Custom Widths */}
+      <div className="grid grid-cols-12 gap-6 w-full px-12">
+
+        {/* Left Column: Tasks */}
+        <div className="col-span-3 flex flex-col bg-[#FBFBFB] p-4 shadow-lg rounded-xl h-full hover:shadow-2xl transition-shadow duration-300">
+          <TodoList />
+        </div>
+
+        {/* Center Column: File Upload */}
+        <div className="col-span-6 flex flex-col bg-[#FBFBFB] p-4 shadow-lg rounded-xl h-full hover:shadow-2xl transition-shadow duration-300">
+          <FileInput />
+        </div>
+
+        {/* Right Column: Video on top, Timer below */}
+        <div className="col-span-3 flex flex-col bg-[#FBFBFB] p-4 shadow-lg rounded-xl min-h-[650px] justify-between hover:shadow-2xl transition-shadow duration-300">
+          <div className="flex flex-col items-center mb-6">
+            <Video />
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="mb-8">
+              <TimeDuration
+                hour={hour}
+                setHour={setHour}
+                minute={minute}
+                setMinute={setMinute}
+                method={method}
+              />
+            </div>
+            <StudyMethod
+              method={method}
+              setMethod={setMethod}
+            />
+          </div>
+      </div>
+
+      </div>
+
+    </div>
   );
 }
 

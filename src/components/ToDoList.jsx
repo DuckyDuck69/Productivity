@@ -38,43 +38,55 @@ export function TodoList() {
         }
 
     };
-    return(
-      <div className="to-do-list">
-        <h1>Tasks to do</h1>
-        <div>
-            <input 
-                type="text"
-                placeholder="Enter a task"
-                value = {newTask}
-                onChange={handleInputChange} />
-            <button className="add-btn"
-                    onClick={addTask}>Add Task
-            </button>
+    return (
+        <div className="bg-white shadow-lg place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[450px] rounded-xl">
+            <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Tasks to Do</h1>
+            <div className="flex gap-2 mb-6">
+                <input
+                    type="text"
+                    placeholder="Enter a task"
+                    value={newTask}
+                    onChange={handleInputChange}
+                    className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+                onClick={addTask}
+                >
+                    +
+                </button>
+            </div>
+            <ol className="space-y-3">
+                {tasks.map((task, index) => (
+                    <li
+                        key={index}
+                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm"
+                    >
+                        <span className="text-gray-700 font-medium flex-1">{task}</span>
+                        <div className="flex gap-2">
+                            <button
+                                className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-colors"
+                                onClick={() => deleteTask(index)}
+                            >
+                                X
+                            </button>
+                            <button
+                                className="bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300 transition-colors"
+                                onClick={() => moveTaskUp(index)}
+                            >
+                                ↑
+                            </button>
+                            <button
+                                className="bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300 transition-colors"
+                                onClick={() => moveTaskDown(index)}
+                            >
+                                ↓
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ol>
         </div>
-        <ol>
-            {tasks.map((task,index) =>
-            <li key={index}>
-                <span className="text">{task}</span>
-                <button
-                className="delete-btn"
-                onClick={() => deleteTask(index)}>
-                Delete
-                </button>
-                <button
-                className="move-btn"
-                onClick={() => moveTaskUp(index)}>
-                ^
-                </button>
-                <button
-                className="move-btn"
-                onClick={() => moveTaskDown(index)}>
-                V
-                </button>
-            </li>
-            )}
-        </ol>
-
-      </div>  
     );
 }
 
