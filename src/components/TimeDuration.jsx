@@ -58,7 +58,7 @@ function TimeDuration({ hour, setHour, minute, setMinute, method }) {
         if (method !== "regular") {
           if (mode === "work") {
             if (method === "pomodoro") {
-              setTargetSeconds((prev) => prev - 25*60);
+              setTargetSeconds((prev) => prev - 25);
             } else if (method === "eyecare") {
               setTargetSeconds((prev) => prev - 20 * 60);
             }
@@ -113,7 +113,7 @@ function TimeDuration({ hour, setHour, minute, setMinute, method }) {
     if (method == "pomodoro") {
       setHour(0);
       setMinute(25);
-      setSecond(25 *60 ); // 25 minutes
+      setSecond(25 ); // 25 minutes
       runTime();
     } else if (method == "eyecare"){
       setHour(0);
@@ -133,7 +133,7 @@ function TimeDuration({ hour, setHour, minute, setMinute, method }) {
     if (method == "pomodoro") {
       setHour(0);
       setMinute(5);
-      setSecond(5 *60); // 5 minutes
+      setSecond(5); // 5 minutes
       runTime();
     } else if (method == "flowtime") {
       runTime();
