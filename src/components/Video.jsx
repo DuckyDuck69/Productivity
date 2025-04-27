@@ -36,9 +36,6 @@ function Video() {
   // Effect to handle state changes for distraction
   useEffect(() => {
     // If user becomes focused, hide the warning
-    if (distractionStatus === "Focused" && showWarning) {
-      setShowWarning(false);
-    }
   }, [distractionStatus, showWarning]);
 
   function stopCam() {
@@ -65,23 +62,21 @@ function Video() {
           
           // Start capturing frames
           intervalRef.current = setInterval(captureAndSendFrame, 1000);
-          
-          // Start the distraction timer
-          timerRef.current = setInterval(() => {
-            if (isDistractedRef.current) {
-              setDistractionTime(prevTime => prevTime + 1);
-              consecutiveDistractedTimeRef.current += 1;
-              
-              // Show warning popup when consecutive distraction time reaches threshold
-              if (consecutiveDistractedTimeRef.current >= 15 && !showWarning) {
+        }
+        timerRef.current = setInterval(() => {
+          if (isDistractedRef.current) {
+            setDistractionTime(prevTime => {
+              const newTime = prevTime + 1;
+        
+              // Every 15 seconds of total distracted time, show warning
+              if (newTime > 0 && newTime % 15 === 0) {
                 setShowWarning(true);
               }
-            } else {
-              // Reset consecutive distraction counter when focused
-              consecutiveDistractedTimeRef.current = 0;
-            }
-          }, 1000);
-        }
+        
+              return newTime;
+            });
+          }
+        }, 1000);
       })
       .catch((error) => {
         console.log("Error:", error);
